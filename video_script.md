@@ -21,30 +21,30 @@ Ultimately, our **Findings** show that by turning emotional volatility into a dy
 ---
 
 ## [2:00 - 6:00] Demonstration: Walkthrough & The Ripple Effect
-**(Visual: Type 'AAPL' into the sidebar. Click 'Fetch Financial Data'.)**
+**(Visual: Type 'META' into the sidebar. Click 'Fetch Financial Data'.)**
 
-"Let me demonstrate exactly how this works using a live example: Apple, ticker symbol AAPL. 
+"Let me demonstrate exactly how this works using a live example: Meta Platforms, ticker symbol META. 
 
-When I type AAPL into the sidebar and hit fetch, the engine does two things simultaneously. 
+When I type META into the sidebar and hit fetch, the engine does two things simultaneously. 
 First, our data fetcher script pings the Yahoo Finance API to pull down live, trailing-twelve-month data like Revenue, EBITDA, and Total Debt. More importantly, it pulls the stock's Beta, which it immediately uses within the Capital Asset Pricing Model (CAPM) to auto-calculate a baseline WACC. 
 Second, our sentiment engine scrapes live Google News RSS feeds to grab today's headlines, while also querying our historical database to fulfill a robust 30-day timeline.
 
-If we run a pure, standard DCF without any sentiment adjustments, our baseline intrinsic value comes out to, let's say, $145 a share.
+If we run a pure, standard DCF without any sentiment adjustments, our baseline intrinsic value for Meta comes out to around $245 a share.
 
 **(Visual: Scroll to the 'Sentiment Signals' section and the 'Advanced Sentiment Tuning' expander. Adjust the sliders.)**
 
-But the market doesn't trade in a vacuum. Let's see how sentiment changes the math. Our engine has scored Apple's recent news, returning an aggregate score of +0.65 (Bullish). 
+But the market doesn't trade in a vacuum. Let's see how sentiment changes the math. Our engine has scored Meta's recent news, returning an aggregate score of roughly +0.22 (Bullish). 
 
 I want to trace exactly how a change in this one qualitative input ripples through the entire pipeline to warp our final quantitative output. 
 On the sidebar, I open 'Advanced Sentiment Tuning'. I'll set my 'Sentiment Weight' to 50%—meaning I only trust the sentiment half as much as the raw financials. I'll set my 'Max WACC Impact' to 2.0% and my 'Max Growth Impact' to 2.0%. 
 
-Because the sentiment is bullish (+0.65), the algorithm assumes two things:
+Because the sentiment is bullish (+0.22), the algorithm assumes two things:
 1. The company is perceived as safer right now, so it *reduces* the discount rate (WACC). 
 2. Consumer demand is likely high, so it *increases* the near-term cash flow growth projections.
 
-The math executes perfectly: Our WACC drops from 9.0% down to 8.35%, and our Growth Rate is boosted from 5.0% up to 5.65%. 
+The math executes perfectly: Our WACC drops from 11.3% down to 11.1%, and our Growth Rate is boosted from 19.9% up to 20.1%. 
 
-If we scroll down to our new 'Sentiment Ripple Effect Pipeline Trace', you can see the end-to-end workflow visualized. We started with a baseline Intrinsic Value of $145. We applied the semantic signal of +0.65 and our custom multipliers. The ripple effect of altering both the discount rate and the cash flow projections results in a final, adjusted Intrinsic Value of $162. 
+If we scroll down to our new 'Sentiment Ripple Effect Pipeline Trace', you can see the end-to-end workflow visualized. We started with a baseline Intrinsic Value of $245. We applied the semantic signal of +0.22 and our custom multipliers. The ripple effect of altering both the discount rate and the cash flow projections results in a final, adjusted Intrinsic Value of $254. 
 
 **(Visual: Point out the 'Intrinsic Value vs. Hypothetical Sentiment Score' line chart)**
 Furthermore, if we look at our line chart, we can explicitly hover and see how the valuation would change if the news cycle suddenly turned bearish tomorrow. We are visually mapping market psychology directly to intrinsic value."
