@@ -75,7 +75,9 @@ However, a professional *would* use this as a powerful **Top-of-Funnel Screening
 
 Imagine an equity analyst tracking 50 different companies. They could use this dashboard to quickly run scenario analyses. If a company is currently trading at $150, but the baseline DCF says it's only worth $120, the analyst can ask: *'How bullish does the market psychology need to be to justify this $150 price tag?'* 
 
-Using the cross-component sensitivity chart, they can trace the line and see that the market is currently pricing the stock as if the sentiment score is a perfect +1.0. If the analyst looks at the actual 'Sentiment Signals' panel and sees the real-world sentiment is only a +0.20, they immediately know the stock is overvalued by emotional retail traders and is ripe for a correction. It provides a structured sandbox to quantify exactly how much of a stock's current price is driven by cash flow versus the current news cycle."
+Using the cross-component sensitivity chart, they can trace the line and see that the market is currently pricing the stock as if the sentiment score is a perfect +1.0. If the analyst looks at the actual 'Sentiment Signals' panel and sees the real-world sentiment is only a +0.20, they immediately know the stock is overvalued by emotional retail traders and is ripe for a correction. It provides a structured sandbox to quantify exactly how much of a stock's current price is driven by cash flow versus the current news cycle.
+
+Furthermore, to make this realistic for institutional use, I implemented a custom **Evaluation Harness** script that runs entirely outside of this Streamlit UI. This harness allows an analyst to input a basket of hundreds of tickers—say, the entire S&P 500. The harness loops through the list, automatically fetches the baseline financial data, scrapes the sentiment scores, calculates the exact dollar-value 'Ripple Effect' delta for every single stock, and exports it directly into a clean CSV file. This bridges the gap between single-stock due diligence and macro-level market screening."
 
 ---
 
