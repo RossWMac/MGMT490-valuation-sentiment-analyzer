@@ -444,7 +444,19 @@ growth_adj = (sent_score * sentiment_weight * max_growth_impact)
 wacc = base_wacc + wacc_adj
 growth_rate = base_growth + growth_adj
 
-# Run DCF
+# Run Baseline DCF (Without Sentiment)
+baseline_dcf = run_dcf(
+    fin,
+    wacc=base_wacc,
+    growth_rate=base_growth,
+    terminal_method=terminal_method,
+    terminal_growth=terminal_growth,
+    exit_multiple=exit_multiple,
+    years=years,
+    margin_of_safety=margin_of_safety,
+)
+
+# Run Adjusted DCF
 dcf = run_dcf(
     fin,
     wacc=wacc,
@@ -611,6 +623,42 @@ if len(sent_trend) > 0:
         yaxis=dict(range=[-1.0, 1.0])
     )
     st.plotly_chart(fig_trend, use_container_width=True)
+
+
+# ── Pipeline Trace ────────────────────────────────────────────────────────────
+st.markdown("<br>", unsafe_allow_html=True)
+st.markdown('<div class="section-header">🌊 Sentiment Ripple Effect (Pipeline Trace)</div>', unsafe_allow_html=True)
+st.caption("Tracing exactly how the calculated sentiment propagates through the mathematical pipeline to warp the final output.")
+
+base_iv = baseline_dcf['intrinsic_value_per_share']
+adj_iv = dcf['intrinsic_value_per_share']
+delta_iv = adj_iv - base_iv
+delta_pct = (delta_iv / base_iv) * 100 if base_iv != 0 else 0
+delta_color = "#3fb950" if delta_iv >= 0 else "#f85149"
+
+st.markdown(f"""
+<div style="background: linear-gradient(135deg, #161b22 0%, #1c2128 100%); border: 1px solid #30363d; border-radius: 12px; padding: 24px; margin-bottom: 24px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+        <div style="flex: 1; text-align: center; border-right: 1px solid #30363d; padding-right: 15px;">
+            <div style="font-size: 13px; color: #8b949e; margin-bottom: 8px;">1. Baseline (No Sentiment)</div>
+            <div style="font-size: 24px; font-weight: 700; color: #e6edf3;">${base_iv:,.2f}</div>
+        </div>
+        <div style="flex: 1; text-align: center; border-right: 1px solid #30363d; padding-right: 15px;">
+            <div style="font-size: 13px; color: #8b949e; margin-bottom: 8px;">2. Semantic Signal</div>
+            <div style="font-size: 24px; font-weight: 700; color: {sent_color};">{sent_score:+.2f}</div>
+        </div>
+        <div style="flex: 1; text-align: center; border-right: 1px solid #30363d; padding-right: 15px;">
+            <div style="font-size: 13px; color: #8b949e; margin-bottom: 8px;">3. Multipliers Applied</div>
+            <div style="font-size: 14px; font-weight: 600; color: #58a6ff;">Weight: {sentiment_weight*100:.0f}%</div>
+            <div style="font-size: 14px; font-weight: 600; color: #58a6ff;">Spreads: ±{max_wacc_impact*100:.0f}%</div>
+        </div>
+        <div style="flex: 1; text-align: center;">
+            <div style="font-size: 13px; color: #8b949e; margin-bottom: 8px;">4. Final Output Ripple</div>
+            <div style="font-size: 26px; font-weight: 700; color: {delta_color};">{delta_iv:+.2f} ({delta_pct:+.1f}%)</div>
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 
 # ── Valuation Results ─────────────────────────────────────────────────────────
